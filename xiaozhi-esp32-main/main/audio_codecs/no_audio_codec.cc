@@ -147,7 +147,40 @@ NoAudioCodecSimplex::NoAudioCodecSimplex(int input_sample_rate, int output_sampl
         .auto_clear_before_cb = false,
         .intr_priority = 0,
     };
+
     ESP_ERROR_CHECK(i2s_new_channel(&chan_cfg, &tx_handle_, nullptr));
+
+    i2s_std_config_t std_cfg2 = {
+            .clk_cfg  = I2S_STD_CLK_DEFAULT_CONFIG((uint32_t)output_sample_rate_),
+            .slot_cfg = I2S_STD_MSB_SLOT_DEFAULT_CONFIG(I2S_DATA_BIT_WIDTH_16BIT,
+                                                        I2S_SLOT_MODE_STEREO),
+
+            .gpio_cfg = {
+                    .mclk = I2S_GPIO_UNUSED,    // some codecs may require mclk signal, this example doesn't need it
+                    .bclk = spk_bclk,
+                    .ws   = spk_ws,
+                    .dout = spk_dout,
+                    .din  = I2S_GPIO_UNUSED,
+                    .invert_flags = {
+                            .mclk_inv = false,
+                            .bclk_inv = false,
+                            .ws_inv   = false,
+                    },
+            },
+    };
+
+    ESP_ERROR_CHECK(i2s_channel_init_std_mode(tx_handle_, &std_cfg2));
+
+#define AUDIO_I2S_SPK_GPIO_EN GPIO_NUM_46
+    gpio_config_t cfg = {
+        .pin_bit_mask =(1ull<<AUDIO_I2S_SPK_GPIO_EN) ,
+        .mode = GPIO_MODE_OUTPUT,
+        .pull_up_en = GPIO_PULLUP_ENABLE,
+        .pull_down_en = GPIO_PULLDOWN_DISABLE,
+        .intr_type =GPIO_INTR_DISABLE ,
+    };
+    gpio_config(&cfg);
+    gpio_set_level(AUDIO_I2S_SPK_GPIO_EN,1);
 
     i2s_std_config_t std_cfg = {
         .clk_cfg = {
@@ -187,8 +220,6 @@ NoAudioCodecSimplex::NoAudioCodecSimplex(int input_sample_rate, int output_sampl
             }
         }
     };
-    ESP_ERROR_CHECK(i2s_channel_init_std_mode(tx_handle_, &std_cfg));
-
     // Create a new channel for MIC
     chan_cfg.id = (i2s_port_t)1;
     ESP_ERROR_CHECK(i2s_new_channel(&chan_cfg, nullptr, &rx_handle_));

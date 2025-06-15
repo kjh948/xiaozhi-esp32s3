@@ -17,6 +17,8 @@
 #include <esp_lcd_panel_ops.h>
 #include <esp_lcd_panel_vendor.h>
 
+#include <driver/gpio.h>
+
 #ifdef SH1106
 #include <esp_lcd_panel_sh1106.h>
 #endif

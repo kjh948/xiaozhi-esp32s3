@@ -15,10 +15,10 @@
 
 set(HEAD_HASH)
 
-file(READ "D:/ESP32-Exrenal-data/ESP32-CAM-S00X-v2.0/S022 ESP32-S3-SPK/ESP-IDF 源码/ESP-IDF_v5.0.3/ESP32-S3-SPK/build/CMakeFiles/git-data/HEAD" HEAD_CONTENTS LIMIT 1024)
+file(READ "/home/kjh948/workspace/xiaozhi-esp32s3/ESP32-S3-CAM-Speaker/IDF Source Code/build/CMakeFiles/git-data/HEAD" HEAD_CONTENTS LIMIT 1024)
 
 string(STRIP "${HEAD_CONTENTS}" HEAD_CONTENTS)
-set(GIT_DIR "F:/ESP-IDF/440/esp-idf_v4.4/esp-idf/.git")
+set(GIT_DIR "/home/kjh948/workspace/xiaozhi-esp32s3/.git")
 # handle git-worktree
 if(EXISTS "${GIT_DIR}/commondir")
 	file(READ "${GIT_DIR}/commondir" GIT_DIR_NEW LIMIT 1024)
@@ -34,17 +34,17 @@ if(HEAD_CONTENTS MATCHES "ref")
 	# named branch
 	string(REPLACE "ref: " "" HEAD_REF "${HEAD_CONTENTS}")
 	if(EXISTS "${GIT_DIR}/${HEAD_REF}")
-		configure_file("${GIT_DIR}/${HEAD_REF}" "D:/ESP32-Exrenal-data/ESP32-CAM-S00X-v2.0/S022 ESP32-S3-SPK/ESP-IDF 源码/ESP-IDF_v5.0.3/ESP32-S3-SPK/build/CMakeFiles/git-data/head-ref" COPYONLY)
+		configure_file("${GIT_DIR}/${HEAD_REF}" "/home/kjh948/workspace/xiaozhi-esp32s3/ESP32-S3-CAM-Speaker/IDF Source Code/build/CMakeFiles/git-data/head-ref" COPYONLY)
 	elseif(EXISTS "${GIT_DIR}/logs/${HEAD_REF}")
-		configure_file("${GIT_DIR}/logs/${HEAD_REF}" "D:/ESP32-Exrenal-data/ESP32-CAM-S00X-v2.0/S022 ESP32-S3-SPK/ESP-IDF 源码/ESP-IDF_v5.0.3/ESP32-S3-SPK/build/CMakeFiles/git-data/head-ref" COPYONLY)
+		configure_file("${GIT_DIR}/logs/${HEAD_REF}" "/home/kjh948/workspace/xiaozhi-esp32s3/ESP32-S3-CAM-Speaker/IDF Source Code/build/CMakeFiles/git-data/head-ref" COPYONLY)
 		set(HEAD_HASH "${HEAD_REF}")
 	endif()
 else()
 	# detached HEAD
-	configure_file("${GIT_DIR}/HEAD" "D:/ESP32-Exrenal-data/ESP32-CAM-S00X-v2.0/S022 ESP32-S3-SPK/ESP-IDF 源码/ESP-IDF_v5.0.3/ESP32-S3-SPK/build/CMakeFiles/git-data/head-ref" COPYONLY)
+	configure_file("${GIT_DIR}/HEAD" "/home/kjh948/workspace/xiaozhi-esp32s3/ESP32-S3-CAM-Speaker/IDF Source Code/build/CMakeFiles/git-data/head-ref" COPYONLY)
 endif()
 
 if(NOT HEAD_HASH)
-	file(READ "D:/ESP32-Exrenal-data/ESP32-CAM-S00X-v2.0/S022 ESP32-S3-SPK/ESP-IDF 源码/ESP-IDF_v5.0.3/ESP32-S3-SPK/build/CMakeFiles/git-data/head-ref" HEAD_HASH LIMIT 1024)
+	file(READ "/home/kjh948/workspace/xiaozhi-esp32s3/ESP32-S3-CAM-Speaker/IDF Source Code/build/CMakeFiles/git-data/head-ref" HEAD_HASH LIMIT 1024)
 	string(STRIP "${HEAD_HASH}" HEAD_HASH)
 endif()
